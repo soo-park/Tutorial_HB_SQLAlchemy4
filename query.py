@@ -71,24 +71,26 @@ q8 = Model.query.filter(Model.brand_id!='for').all()
 def get_model_info(year):
     """Takes in a year and prints out each model name, brand name, and brand
     headquarters for that year using only ONE database query."""
-
+    
     # Solution 1
     print "Models from " + str(year)
     model_on_year = Model.query.filter(Model.year==year).all()
     result = {}
     for model in model_on_year:
-        brand_info = (model.brand.name, model.brand.headquarters)
+        brand_info = (str(model.brand.name), str(model.brand.headquarters))
         if brand_info in result:
             result[brand_info].append(model.name)
         else:
-            result[brand_info] = [model.name]
-    return result
+            result[brand_info] = [str(model.name)]
+    import pprint
+    pprint.pprint(result)
+    del pprint
 
     ## Solution 2
-    ## Solution 1 is damn long for such simple action, so make it short
+    ## Solution 1 is f-long for such a simple action. Make it short
 
 
-print get_model_info(1963)
+get_model_info(1963)
 
 def get_brands_summary():
     """Prints out each brand name (once) and all of that brand's models,
