@@ -12,12 +12,45 @@ db = SQLAlchemy()
 ##############################################################################
 # Part 1: Compose ORM
 
+class Award(db.Model):
+    """Car award."""
+
+    __tablename__ = "awards"
+
+    award_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    year = db.Column(db.Integer)
+    winner_id = db.Column(db.Integer, db.ForeignKey('models.model_id'), nullable = True)
+    name = db.Column(db.String(50))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Award award_id=%s year=%s>" % (self.award_id, self.year)
+
+
+
 class Brand(db.Model):
     """Car brand."""
 
     __tablename__ = "brands"
 
-    pass
+    brand_id = db.Column(db.String(5), primary_key=True)
+    name = db.Column(db.String(50))
+    founded = db.Column(db.Integer, nullable = True)
+    headquarters = db.Column(db.String(50), nullable = True)
+    discontinued = db.Column(db.Integer, nullable = True)
+
+    # Define relationship to model
+    models = db.relationship("Model",
+                           backref=db.backref("brands", order_by=brand_id))
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Brand brand_id=%s name=%s discontinued=%s founded=%s>"\
+                % (self.brand_id, self.name,\
+                   self.discontinued, self.founded)
 
 
 class Model(db.Model):
@@ -25,7 +58,22 @@ class Model(db.Model):
 
     __tablename__ = "models"
 
-    pass
+    model_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    year = db.Column(db.Integer)
+    brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'))
+    name = db.Column(db.String(50))
+
+    # Define relationship to model
+    awards = db.relationship("Award",
+                           backref=db.backref("models", order_by=model_id))
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Model model_id=%s year=%s brand_id=%s>"\
+                % (self.model_id, self.year, self.brand_id)
+
 
 # End Part 1
 
