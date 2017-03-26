@@ -72,15 +72,45 @@ def get_model_info(year):
     """Takes in a year and prints out each model name, brand name, and brand
     headquarters for that year using only ONE database query."""
 
-    return db.session.query(Model.name, Brand.name, Brand.headquarters).\
-           filter(Model.year==year).all()
+    # Solution 1
+    print "Models from " + str(year)
+    model_on_year = Model.query.filter(Model.year==year).all()
+    result = {}
+    for model in model_on_year:
+        brand_info = (model.brand.name, model.brand.headquarters)
+        if brand_info in result:
+            result[brand_info].append(model.name)
+        else:
+            result[brand_info] = [model.name]
+    return result
 
+    ## Solution 2
+    ## Solution 1 is damn long for such simple action, so make it short
+
+
+print get_model_info(1963)
 
 def get_brands_summary():
     """Prints out each brand name (once) and all of that brand's models,
     including their year, using only ONE database query."""
 
-    return db.session.query(Brand.name, Model.name, Model.year).all()
+    # return db.session.query(Brand.name, Model.name, Model.year).all()
+    brands = Brand.query.group_by(Brand.brand_id).all()
+    return brands
+    # for brand in brands:
+    #     m_name, b_name, hq = str(model[0]), str(model[1]), str(model[2])
+    #     if m_name in result:
+    #         result[m_name].append({'brand': b_name, 'headquarters': hq})            
+    #     else:
+    #         result[m_name] = [{'brand': b_name, 'headquarters': hq}]
+
+    # if result:
+    #     return result
+    # else:
+    #     return "There is no model in that year."
+
+test2 = get_brands_summary()
+
 
 
 def search_brands_by_name(mystr):

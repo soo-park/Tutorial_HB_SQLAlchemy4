@@ -41,8 +41,7 @@ class Brand(db.Model):
     discontinued = db.Column(db.Integer, nullable = True)
 
     # Define relationship to model
-    models = db.relationship("Model",
-                           backref=db.backref("brands", order_by=brand_id))
+    model = db.relationship("Model")
 
 
     def __repr__(self):
@@ -64,8 +63,10 @@ class Model(db.Model):
     name = db.Column(db.String(50))
 
     # Define relationship to model
-    awards = db.relationship("Award",
+    award = db.relationship("Award",
                            backref=db.backref("models", order_by=model_id))
+    # Define relationship to model
+    brand = db.relationship("Brand")
 
 
     def __repr__(self):
