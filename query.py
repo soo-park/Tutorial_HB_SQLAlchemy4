@@ -114,8 +114,9 @@ def get_brands_summary():
     pprint.pprint(result)
     del pprint
 
+print "This is test case running for get_brands_summary function"
 get_brands_summary()
-
+print "End of test case"
 
 
 def search_brands_by_name(mystr):
