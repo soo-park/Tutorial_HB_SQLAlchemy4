@@ -124,11 +124,22 @@ def search_brands_by_name(mystr):
     """Returns all Brand objects corresponding to brands whose names include
     the given string."""
 
+    # returning objects, not printing results as asked
     return Brand.query.filter(Brand.name.like('%s'%'%'+mystr+'%')).all()
+
+
+print "This is test case running for search_brands_by_name(mystr)"
+print search_brands_by_name('a')
+print "End of test case\n"
 
 
 def get_models_between(start_year, end_year):
     """Returns all Model objects corresponding to models made between
     start_year (inclusive) and end_year (exclusive)."""
 
+    # returning object not printing resultm as requested
     return Model.query.filter(Model.year>=start_year, Model.year<end_year).all()
+
+print "This is test case running for get_models_between(start_year, end_year)"
+print get_models_between(1920, 1950)
+print "End of test case\n"
