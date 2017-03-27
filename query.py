@@ -72,7 +72,6 @@ def get_model_info(year):
     """Takes in a year and prints out each model name, brand name, and brand
     headquarters for that year using only ONE database query."""
     
-    # Solution 1
     print "Models from " + str(year)
     model_on_year = Model.query.filter(Model.year==year).all()
     result = {}
@@ -88,17 +87,7 @@ def get_model_info(year):
     pprint.pprint(result)
     del pprint
 
-    ## Solution 2
-    ## Solution 1 is f-long for such a simple action. Make it short
-    ## for all that are below too
-    ## harder to comprehend, and cannot build the default
     ## please suggest a shorter solution
-
-    # import pprint; pprint.pprint(
-    #     {(str(model.brand.name), str(model.brand.headquarters))\
-    #      for model in model_on_year
-    #     }); del pprint
-
 
 
 def get_brands_summary():
