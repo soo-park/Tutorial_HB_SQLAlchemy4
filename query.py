@@ -91,10 +91,15 @@ def get_model_info(year):
     ## Solution 2
     ## Solution 1 is f-long for such a simple action. Make it short
     ## for all that are below too
+    ## harder to comprehend, and cannot build the default
+    ## please suggest a shorter solution
 
-print "This is test case running for get_model_info function"
-get_model_info(1963)
-print "End of test case"
+    # import pprint; pprint.pprint(
+    #     {(str(model.brand.name), str(model.brand.headquarters))\
+    #      for model in model_on_year
+    #     }); del pprint
+
+
 
 def get_brands_summary():
     """Prints out each brand name (once) and all of that brand's models,
@@ -115,10 +120,6 @@ def get_brands_summary():
     pprint.pprint(result)
     del pprint
 
-print "This is test case running for get_brands_summary function"
-get_brands_summary()
-print "End of test case\n"
-
 
 def search_brands_by_name(mystr):
     """Returns all Brand objects corresponding to brands whose names include
@@ -128,11 +129,6 @@ def search_brands_by_name(mystr):
     return Brand.query.filter(Brand.name.like('%s'%'%'+mystr+'%')).all()
 
 
-print "This is test case running for search_brands_by_name(mystr)"
-print search_brands_by_name('a')
-print "End of test case\n"
-
-
 def get_models_between(start_year, end_year):
     """Returns all Model objects corresponding to models made between
     start_year (inclusive) and end_year (exclusive)."""
@@ -140,6 +136,28 @@ def get_models_between(start_year, end_year):
     # returning object not printing resultm as requested
     return Model.query.filter(Model.year>=start_year, Model.year<end_year).all()
 
-print "This is test case running for get_models_between(start_year, end_year)"
-print get_models_between(1920, 1950)
-print "End of test case\n"
+
+def test_query_dot_py():
+
+    print "--------Printing test cases for query.py--------\n"
+
+    print "This is test case running for get_model_info function"
+    get_model_info(1963)
+    print "End of test case\n"
+
+    print "This is test case running for get_brands_summary function"
+    get_brands_summary()
+    print "End of test case\n"
+
+    print "This is test case running for search_brands_by_name(mystr)"
+    print search_brands_by_name('a')
+    print "End of test case\n"
+
+    print "This is test case running for get_models_between(start_year, end_year)"
+    print get_models_between(1920, 1950)
+    print "End of test case\n"
+
+    print "--------End printing test cases for query.py--------"
+
+
+test_query_dot_py()
