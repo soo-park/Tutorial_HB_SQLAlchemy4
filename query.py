@@ -76,42 +76,45 @@ def get_model_info(year):
     print "Models from " + str(year)
     model_on_year = Model.query.filter(Model.year==year).all()
     result = {}
+
     for model in model_on_year:
         brand_info = (str(model.brand.name), str(model.brand.headquarters))
         if brand_info in result:
             result[brand_info].append(model.name)
         else:
             result[brand_info] = [str(model.name)]
+
     import pprint
     pprint.pprint(result)
     del pprint
 
     ## Solution 2
     ## Solution 1 is f-long for such a simple action. Make it short
+    ## for all that are below too
 
-
+print "This is test case running for get_model_info function"
 get_model_info(1963)
+print "End of test case"
 
 def get_brands_summary():
     """Prints out each brand name (once) and all of that brand's models,
     including their year, using only ONE database query."""
 
-    # return db.session.query(Brand.name, Model.name, Model.year).all()
-    brands = Brand.query.group_by(Brand.brand_id).all()
-    return brands
-    # for brand in brands:
-    #     m_name, b_name, hq = str(model[0]), str(model[1]), str(model[2])
-    #     if m_name in result:
-    #         result[m_name].append({'brand': b_name, 'headquarters': hq})            
-    #     else:
-    #         result[m_name] = [{'brand': b_name, 'headquarters': hq}]
+    brands = db.session.query(Brand.name, Model.name, Model.year).all()
+    result = {}
 
-    # if result:
-    #     return result
-    # else:
-    #     return "There is no model in that year."
+    for brand in brands:
+        b_name, m_name, yr = str(brand[0]), str(brand[1]), str(brand[2])
+        if b_name in result:
+            result[b_name].append(m_name + " (" + yr + ")")            
+        else:
+            result[b_name] = [m_name + " (" + yr + ")"]
 
-test2 = get_brands_summary()
+    import pprint
+    pprint.pprint(result)
+    del pprint
+
+get_brands_summary()
 
 
 
