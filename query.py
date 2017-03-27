@@ -100,7 +100,8 @@ def get_brands_summary():
     """Prints out each brand name (once) and all of that brand's models,
     including their year, using only ONE database query."""
 
-    brands = db.session.query(Brand.name, Model.name, Model.year).all()
+    brands = db.session.query(Brand.name, Model.name, Model.year).\
+             join(Model).all()
     result = {}
 
     for brand in brands:
@@ -116,7 +117,7 @@ def get_brands_summary():
 
 print "This is test case running for get_brands_summary function"
 get_brands_summary()
-print "End of test case"
+print "End of test case\n"
 
 
 def search_brands_by_name(mystr):
