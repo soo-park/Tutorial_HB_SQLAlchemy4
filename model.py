@@ -18,9 +18,9 @@ class Award(db.Model):
     __tablename__ = "awards"
 
     award_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    year = db.Column(db.Integer)
-    winner_id = db.Column(db.Integer, db.ForeignKey('models.model_id'), nullable = True)
-    name = db.Column(db.String(50))
+    year = db.Column(db.Integer, nullable = False)
+    winner_id = db.Column(db.Integer, db.ForeignKey('models.model_id'))
+    name = db.Column(db.String(50), nullable = False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -35,10 +35,10 @@ class Brand(db.Model):
     __tablename__ = "brands"
 
     brand_id = db.Column(db.String(5), primary_key=True)
-    name = db.Column(db.String(50))
-    founded = db.Column(db.Integer, nullable = True)
-    headquarters = db.Column(db.String(50), nullable = True)
-    discontinued = db.Column(db.Integer, nullable = True)
+    name = db.Column(db.String(50), nullable = False)
+    founded = db.Column(db.Integer)
+    headquarters = db.Column(db.String(50))
+    discontinued = db.Column(db.Integer)
 
     # Define relationship to model
     model = db.relationship("Model")
@@ -58,9 +58,9 @@ class Model(db.Model):
     __tablename__ = "models"
 
     model_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    year = db.Column(db.Integer)
-    brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'))
-    name = db.Column(db.String(50))
+    year = db.Column(db.Integer, nullable = False)
+    brand_id = db.Column(db.String(5), db.ForeignKey('brands.brand_id'), nullable = False)
+    name = db.Column(db.String(50), nullable = False)
 
     # Define relationship to model
     award = db.relationship("Award",
